@@ -1,17 +1,24 @@
-// ./src/containers/MoviesPage.js
-import React from 'react';
-import { connect } from 'react-redux';
-import MoviesList from '../components/MoviesList';
 
-const MoviesPage = ({ movies }) => 
-  <div>
-    <MoviesList movies={movies} />
-  </div>;
 
-const mapStateToProps = (state) => {
-  return {
-    movies: state.movies
-  };
+import React from "react";
+import { Route } from "react-router-dom";
+import MoviesList from "../components/MoviesList";
+import MovieShow from "../components/MovieShow";
+
+function MoviesPage({ movies, match }) {
+  return (
+    <div>
+      <MoviesList movies={movies} />
+
+      <Route exact path={match.url}>
+        <h3>Choose a movie from the list above</h3>
+      </Route>
+
+      <Route path={`${match.url}/:movieId`}>
+        <MovieShow movies={movies} />
+      </Route>
+    </div>
+  );
 }
 
-export default connect(mapStateToProps)(MoviesPage);
+export default MoviesPage;
